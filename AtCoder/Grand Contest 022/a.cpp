@@ -1,47 +1,51 @@
-#include<cstdio>
+/*
+ Jugemu Jugemu
+ Goko-no surikire
+ Kaijarisuigyo-no
+ Suigyomatsu Unraimatsu Furaimatsu
+ Kuunerutokoro-ni Sumutokoro
+ Yaburakoji-no burakoji
+ Paipopaipo Paipo-no-shuringan
+ Shuringan-no Gurindai
+ Gurindai-no Ponpokopi-no Ponpokona-no
+ Chokyumei-no Chosuke
+ */
+
 #include <bits/stdc++.h>
 using namespace std;
-string p;
-int n, v[30];
 
-int main()
-{
-    int ck = 0;
-    cin >> p;
-    for (int i = 0; p[i]; i++)
-    {
-        v[p[i] - 'a'] = 1;
-        if (p[i] + i != 'z')
-        {
-            ck = 1;
-        }
+#define pb push_back
+#define mp make_pair
+typedef long long ll;
+
+string s;
+bool cek[26];
+
+int main(){
+    cin >> s;
+    for (auto &c : s){
+        cek[c - 'a'] = 1;
     }
-    n = p.length();
-    if (n != 26)
-    {
-        int i;
-        for (i = 0; i < 26; i++)if (!v[i])break;
-        p[n] = i + 'a';
-        cout << p << endl;
+    if (s.length() < 26) {
+        char g = 'a';
+        while (cek[g - 'a']) {
+            ++g;
+        }
+        s.pb(g);
+        cout << s << endl;
         return 0;
     }
-    if (ck == 0) {
-        cout << -1 << endl;
-        return 0;
-    }
-    for (int i = n - 1; i >= 0; i--) {
-        for (int j = 0; j < 26; j++)v[j] = 0;
-        for (int j = 0; j < i; j++) {
-            v[p[j] - 'a'] = 1;
-        }
-        for (int j = p[i] - 'a' + 1; j < 26; j++) {
-            if (!v[j]) {
-                v[j] = 1;
-                p[i] = 'a' + j;
-                p[i + 1] = 0;
-                cout << p << endl;
+    for (int i = 25; i >= 0; --i){
+        for (int j = s[i] - 'a' + 1; j < 26; ++j){
+            if (!cek[j]){
+                s[i] = 'a' + j;
+                cout << s << endl;
                 return 0;
             }
         }
+        cek[s[i] - 'a'] = false;
+        s.pop_back();
     }
+    cout << -1 << endl;
+    return 0;
 }
